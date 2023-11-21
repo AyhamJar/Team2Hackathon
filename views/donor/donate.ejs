@@ -1,71 +1,98 @@
 <main>
-	<%- include('../partials/donorSidebar') %>
-	
-	<div id="main-wrapper">
-		<div class="bg-white shadow-sm p-3">
-			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
-			<h5 class="m-0 color-theme d-inline-block">Donate</h5>
-		</div>
-		
-		<form action="/donor/donate" method="POST" class="border m-4 my-3 p-4 bg-white rounded-2 shadow">
-			<div class="mb-4">
-				<label for="food" class="form-label">Food type</label>
-				<input type="text" name="donation[foodType]" class="form-control" id="food" placeholder="Enter food.." required autofocus>
-			</div>
-			
-			<div class="row">
-				<div class="mb-4 col-sm-6">
-					<label for="quantity" class="form-label">Quantity</label>
-					<input type="text" name="donation[quantity]" class="form-control" id="quantity" placeholder="Enter quantity of food.." required>
-				</div>
-				
-				<div class="mb-4 col-sm-6">
-					<label for="time" class="form-label">Expiry Date</label>
-					<input type="date" name="donation[expiryDate]" class="form-date-input" id="expirytime" required>
-				</div>
-			</div>
-				
-				<div class="row">
-					<div class="mb-4 col-sm-8">
-						<label for="city" class="form-label">City</label>
-						<select class="form-select" name="donation[city]" id="city" required>
-							<option value="abudhabi">Abu Dhabi</option>
-							<option value="dubai">Dubai</option>
-							<option value="sharjah">Sharjah</option>
-							<option value="alain">Al Ain</option>
-							<option value="ajman">Ajman</option>
-							<option value="rasalkhaimah">Ras Al Khaimah</option>
-							<option value="fujairah">Fujairah</option>
-							<option value="umm-al-quwain">Umm Al Quwain</option>
-							<!-- Add more cities here if needed -->
-						  </select>
-					</div>
+    <%- include('../partials/donorSidebar') %>
+    
+    <div id="main-wrapper">
+        <div class="bg-white shadow-sm p-3">
+            <span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
+            <h5 class="m-0 color-theme d-inline-block">Donate</h5>
+        </div>
+        
+        <form action="/donor/donate" method="POST" enctype="multipart/form-data" class="border m-4 my-3 p-4 bg-white rounded-2 shadow">
+            <div class="mb-4">
+                <label for="food" class="form-label">Food type</label>
+                <input type="text" name="donation[foodType]" class="form-control" id="food" placeholder="Enter food.." required autofocus>
+            </div>
+            
+            <div class="row">
+                <div class="mb-4 col-sm-6">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="text" name="donation[quantity]" class="form-control" id="quantity" placeholder="Enter quantity of food.." required>
+                </div>
+                
+                <div class="mb-4 col-sm-6">
+                    <label for="expiryDate" class="form-label">Expiry Date</label>
+                    <input type="date" name="donation[expiryDate]" class="form-control" id="expiryDate" required>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select" name="donation[category]" id="category" required>
+                    <option value="veg">Vegetarian</option>
+                    <option value="non-veg">Non-Vegetarian</option>
+                    <option value="bakery">Bakery</option>
+                </select>
+            </div>
 
-					<div class="row">
-						<div class="mb-4 col-sm-8">
-							<label for="address" class="form-label">Address to collect</label>
-							<input type="text" name="donation[address]" class="form-control" id="address" placeholder="Enter address.." value="<%= currentUser.address %>" required>
-						</div>
-				
-				<div class="mb-4 col-sm-4">
-					<label for="phone" class="form-label">Phone</label>
-					<input type="number" name="donation[phone]" class="form-control" id="phone" placeholder="Enter phone.." value="<%= currentUser.phone %>" required>
-				</div>
-			</div>
-			
-			<div class="mb-4">
-				<label for="msg" class="form-label">Want to write some message?</label>
-				<textarea type="text" name="donation[donorToAdminMsg]" class="form-control" id="msg" placeholder="You can write here some msg.."></textarea>
-			</div>
-			
-			<button type="submit" class="btn w-75 d-block m-auto mt-4">Submit</button>
-		</form>
-		
-	</div>
+            <div class="row">
+                <div class="mb-4 col-sm-6">
+                    <label for="pickupTime" class="form-label">Estimated Time of Pickup</label>
+                    <input type="time" name="donation[pickupTime]" class="form-control" id="pickupTime">
+                </div>
+
+                <div class="mb-4 col-sm-6">
+                    <label for="pickupUntil" class="form-label">Open for Pickup Until</label>
+                    <input type="time" name="donation[pickupUntil]" class="form-control" id="pickupUntil">
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label for="storageInstructions" class="form-label">Storage Instructions</label>
+                <textarea type="text" name="donation[storageInstructions]" class="form-control" id="storageInstructions" placeholder="Enter storage instructions.."></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label for="charitableContribution" class="form-label">Charitable Contribution (Optional)</label>
+                <input type="text" name="donation[charitableContribution]" class="form-control" id="charitableContribution" placeholder="Enter amount...">
+            </div>
+
+            <div class="row">
+                <div class="mb-4 col-sm-8">
+                    <label for="city" class="form-label">City</label>
+                    <select class="form-select" name="donation[city]" id="city" required>
+                        <option value="abudhabi">Abu Dhabi</option>
+                        <option value="dubai">Dubai</option>
+                        <option value="sharjah">Sharjah</option>
+                        <option value="alain">Al Ain</option>
+                        <option value="ajman">Ajman</option>
+                        <option value="rasalkhaimah">Ras Al Khaimah</option>
+                        <option value="fujairah">Fujairah</option>
+                        <option value="umm-al-quwain">Umm Al Quwain</option>
+                        <!-- Add more cities here if needed -->
+                    </select>
+                </div>
+
+                <div class="row">
+                    <div class="mb-4 col-sm-8">
+                        <label for="address" class="form-label">Address to collect</label>
+                        <input type="text" name="donation[address]" class="form-control" id="address" placeholder="Enter address.." value="<%= currentUser.address %>" required>
+                    </div>
+
+                    <div class="mb-4 col-sm-4">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="number" name="donation[phone]" class="form-control" id="phone" placeholder="Enter phone.." value="<%= currentUser.phone %>" required>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="mb-4">
+                <label for="msg" class="form-label">Details about the item?</label>
+                <textarea type="text" name="donation[donorToAdminMsg]" class="form-control" id="msg" placeholder="You can write here some msg.."></textarea>
+            </div>
+            
+            <button type="submit" class="btn w-75 d-block m-auto mt-4">Submit</button>
+        </form>
+        
+    </div>
 </main>
-
-<script>
-	const d = new Date();
-	const dateString = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2) + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
-	document.getElementById("time").value = dateString;
-</script>
