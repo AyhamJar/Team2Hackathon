@@ -16,7 +16,6 @@
 						<th scope="col">Food type</th>
 						<th scope="col">Quantity</th>
 						<th scope="col">Status</th>
-						<th scope="col">Cooking Time</th>
 						<th scope="col">Agent assigned</th>
 						<th scope="col">Collection Time</th>
 					</tr>
@@ -28,7 +27,6 @@
 							<td> <%= previousDonations[i].foodType %> </td>
 							<td> <%= previousDonations[i].quantity %> </td>
 							<td class="fw-bold text-<%= previousDonations[i].status %>"> <%= previousDonations[i].status %> </td>
-							<td> <%= previousDonations[i].cookingTime.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short"}) %> </td>
 							<td> <%= previousDonations[i].agent.firstName + " " + previousDonations[i].agent.lastName %> </td>
 							<td> <%= previousDonations[i].collectionTime.toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short"}) %> </td>
 						</tr>

@@ -61,7 +61,7 @@ router.get("/agent/collection/collect/:collectionId", middleware.ensureAgentLogg
 	try
 	{
 		const collectionId = req.params.collectionId;
-		await Donation.findByIdAndUpdate(collectionId).then({ status: "collected", collectionTime: Date.now() });
+		await Donation.findByIdAndUpdate(collectionId, { status: "collected", collectionTime: Date.now() });
 		req.flash("success", "Donation collected successfully");
 		res.redirect(`/agent/collection/view/${collectionId}`);
 	}
@@ -73,7 +73,30 @@ router.get("/agent/collection/collect/:collectionId", middleware.ensureAgentLogg
 	}
 });
 
-
+router.get("/agent/collection/cancel/:collectionId", middleware.ensureAgentLoggedIn, async (req,res) => {
+	try
+	{
+		const collectionId = req.params.collectionId;
+		const update = {
+			$set: {
+				status: "accepted",
+			},
+			$unset: {
+				adminToAgentMsg: "",
+				agent: ""
+			}
+		};
+		await Donation.findByIdAndUpdate(collectionId, update);
+		req.flash("success", "Donation cancelled successfully" + collectionId.toString());
+		res.redirect(`/agent/collections/pending`);
+	}
+	catch(err)
+	{
+		console.log(err);
+		req.flash("error", "Some error occurred on the server.")
+		res.redirect("back");
+	}
+});
 
 router.get("/agent/profile", middleware.ensureAgentLoggedIn, (req,res) => {
 	res.render("agent/profile", { title: "My Profile" });

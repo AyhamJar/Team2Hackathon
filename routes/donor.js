@@ -103,8 +103,23 @@ router.put("/donor/profile", middleware.ensureDonorLoggedIn, async (req,res) => 
 		req.flash("error", "Some error occurred on the server.")
 		res.redirect("back");
 	}
-	
 });
 
+// Delete Record
+router.get("/donor/donation/delete/:donationId", middleware.ensureDonorLoggedIn, async (req,res) => {
+	try
+	{
+		const donationId = req.params.donationId;
+		await Donation.findByIdAndDelete(donationId);
+		req.flash("success", "Donation deleted successfully");
+		res.redirect("/donor/donations/pending/");
+	}
+	catch(err)
+	{
+		console.log(err);
+		req.flash("error", "Some error occurred on the server.")
+		res.redirect("back");
+	}
+});
 
 module.exports = router;
