@@ -61,6 +61,10 @@
 						</div>
 					<% } %>
 					
+					<div class="mb-2">
+						<a href="/donor/editDonate/<%= pendingDonations[i]._id %>" class="btn">Edit</a>
+						<a href="/donor/donation/delete/<%= pendingDonations[i]._id %>" class="btn">Delete</a>
+                    </div>
 				</div>
 			<% } %>
 		</div>
