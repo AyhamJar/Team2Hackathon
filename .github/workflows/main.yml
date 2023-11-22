@@ -14,8 +14,9 @@ jobs:
 
       - name: Deploy to EC2-1
         run: |
-          echo "${{ secrets.PRIVATE_KEY_1 }}" > private_key.pem
+          echo "${{ secrets.PRIVATE_KEY_1 }}" | base64 -d > private_key.pem
           chmod 600 private_key.pem
           ssh -i private_key.pem -o StrictHostKeyChecking=no ubuntu@ec2-54-224-229-12.compute-1.amazonaws.com "cd /Team2Hackathon && git pull origin main && npm install && nohup node app.js &"
         shell: bash
+
 
