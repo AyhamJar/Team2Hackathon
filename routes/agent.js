@@ -52,8 +52,8 @@ router.get("/agent/donation/assign/:donationId", middleware.ensureAgentLoggedIn,
 	{
 		const donationId = req.params.donationId;
 		const agentId = req.user._id;
-		await Donation.findByIdAndUpdate(donationId).then({ status: "assigned", agent: agentId });
-		req.flash("success", "Donation collected successfully");
+		await Donation.findByIdAndUpdate(donationId, { status: "assigned", agent: agentId });
+		req.flash("success", "Assigned successfully");
 		res.redirect(`/agent/donation/view/${donationId}`);
 	}
 	catch(err)

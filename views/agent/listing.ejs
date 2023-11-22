@@ -1,5 +1,6 @@
+<main>
 <!-- listings.ejs -->
-
+<%- include('../partials/agentSidebar') %>
 <div id="main-wrapper">
     <div class="bg-white shadow-sm p-3">
         <span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
@@ -16,13 +17,13 @@
                     <p class="card-text">Expiry Date: <%= donation.expiryDate %></p>
                     <p class="card-text">Address: <%= donation.address %>, <%= donation.city %></p>
                     <!-- Add more details as needed -->
-                    <a href="/agent/donation/assign/<%= donation._id %>" class="btn btn-primary">View</a>
+                    <a href="/agent/donation/view/<%= donation._id %>" class="btn btn-primary">View</a>
                 </div>
             </div>
         <% }); %>
     </div>
 
-
+</main>
 
 
 
