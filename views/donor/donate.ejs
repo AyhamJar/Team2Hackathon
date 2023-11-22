@@ -49,6 +49,10 @@
                         <!-- Add more cities here if needed -->
                     </select>
                 </div>
+				<div class="mb-4 col-sm-2">
+					<label for="weight" class="form-label">Weight (in Kg)</label>
+					<input type="number" name="donation[weight]" class="form-control" id="weight" placeholder="Enter weight.." value="<%= donation && donation.weight ? donation.weight : '' %>" required min="0">
+				</div>
 
                 <div class="row">
                     <div class="mb-4 col-sm-8">
