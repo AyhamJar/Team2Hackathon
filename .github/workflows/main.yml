@@ -18,10 +18,9 @@ jobs:
 
       - name: Deploy to EC2-1
         run: |
-          ssh -i "vm1key.pem" ubuntu@ec2-54-224-229-12.compute-1.amazonaws.com
-          cd Team2Hackathon
-          git pull origin main
-          npm install
-          nohup node app.js &
-          
-        shell: bash
+          ssh -i "vm1key.pem" ubuntu@ec2-54-224-229-12.compute-1.amazonaws.com 'bash -s' <<'ENDSSH'
+            cd Team2Hackathon
+            git pull origin main
+            npm install
+            nohup node app.js > /dev/null 2>&1 &
+          ENDSSH
