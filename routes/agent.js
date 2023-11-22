@@ -47,21 +47,34 @@ router.get("/agent/donation/view/:donationId", middleware.ensureAgentLoggedIn, a
 	}
 });
 
-router.get("/agent/donation/assign/:donationId", middleware.ensureAgentLoggedIn, async (req,res) => {
-	try
-	{
-		const donationId = req.params.donationId;
-		const agentId = req.user._id;
-		await Donation.findByIdAndUpdate(donationId, { status: "assigned", agent: agentId });
-		req.flash("success", "Assigned successfully");
-		res.redirect(`/agent/donation/view/${donationId}`);
-	}
-	catch(err)
-	{
-		console.log(err);
-		req.flash("error", "Some error occurred on the server.")
-		res.redirect("back");
-	}
+const MAX_ASSIGNED_DONATIONS = 2; // Adjust the maximum allowed assigned donations
+
+router.get("/agent/donation/assign/:donationId", middleware.ensureAgentLoggedIn, async (req, res) => {
+   try {
+       const donationId = req.params.donationId;
+       const agentId = req.user._id;
+
+
+       // Check if the agent already has the maximum allowed assigned donations
+       const assignedDonationsCount = await Donation.countDocuments({ status: "assigned", agent: agentId });
+       console.log("assignedDonationsCount: " + String(assignedDonationsCount))
+       if (assignedDonationsCount >= MAX_ASSIGNED_DONATIONS) {
+           req.flash("error", "You have already reached the maximum allowed assigned donations.");
+           return res.redirect("back");
+       }
+
+
+       // Update the status of the new donation
+       await Donation.findByIdAndUpdate(donationId, { status: "assigned", agent: agentId });
+
+
+       req.flash("success", "Assigned successfully");
+       res.redirect(`/agent/donation/view/${donationId}`);
+   } catch (err) {
+       console.log(err);
+       req.flash("error", "Some error occurred on the server.")
+       res.redirect("back");
+   }
 });
 
 // Instead of handling form submission, assign the donation to the current agent directly
