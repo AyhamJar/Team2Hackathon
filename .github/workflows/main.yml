@@ -12,8 +12,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Deploy to EC2-1
+      - name: Set up SSH key
         run: |
           echo "${{ secrets.SSH_PRIVATE_KEY_1 }}" > vm1key.pem
+          chmod 600 vm1key.pem
+
+      - name: Update known_hosts
+        run: |
+          ssh-keyscan -H ec2-54-224-229-12.compute-1.amazonaws.com >> $HOME/.ssh/known_hosts
+
+      - name: Deploy to EC2-1
+        run: |
           ssh -i "vm1key.pem" ubuntu@ec2-54-224-229-12.compute-1.amazonaws.com "cd /Team2Hackathon && git pull origin main && npm install && nohup node app.js &"
         shell: bash
