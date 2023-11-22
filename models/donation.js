@@ -34,6 +34,9 @@ const donationSchema = new mongoose.Schema({
 		type: Number,
 		required: true
 	},
+	image: {
+		type: Buffer,
+	},
 	donorToAdminMsg: String,
 	adminToAgentMsg: String,
 	collectionTime: {
