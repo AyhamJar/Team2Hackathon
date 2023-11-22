@@ -23,9 +23,9 @@ router.get("/agent/donation", async (req, res) => {
     try {
         // Fetch the list of available donations (adjust this based on your data retrieval logic)
         const donations = await Donation.find({status: "accepted" }).populate("donor");
-
+		const user = req.user;
         // Render the food listings page with the donation data
-        res.render("agent/listing", { title: "Available Donations", donations });
+        res.render("agent/listing", { title: "Available Donations", user, donations });
     } catch (err) {
         console.log(err);
         req.flash("error", "Some error occurred on the server.");

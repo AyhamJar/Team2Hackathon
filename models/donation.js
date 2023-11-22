@@ -34,6 +34,11 @@ const donationSchema = new mongoose.Schema({
 		type: Number,
 		required: true
 	},
+	donationType: {
+		type: String,
+		enum: ["compost", "food"],
+		required: true
+	},
 	donorToAdminMsg: String,
 	adminToAgentMsg: String,
 	collectionTime: {

@@ -21,6 +21,15 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		enum: ["male", "female"]
 	},
+	city: {
+		type: String,
+		required: true
+	},
+	agentType: {
+		type: String,
+		enum: ["compost", "food"],
+		required: true
+	},
 	address: String,
 	phone: Number,
 	joinedTime: {
