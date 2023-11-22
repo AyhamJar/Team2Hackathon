@@ -12,13 +12,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up SSH key
-        run: |
-          echo "${{ secrets.SSH_PRIVATE_KEY_1 }}" > vm1key.pem
-
       - name: Deploy to EC2-1
         run: |
-          ssh -i "vm1key.pem" ubuntu@ec2-54-224-229-12.compute-1.amazonaws.com
+          ssh -i "${{ secrets.SSH_PRIVATE_KEY_1 }}" ubuntu@ec2-54-224-229-12.compute-1.amazonaws.com
           cd Team2Hackathon
           git pull origin main
           npm install
+          nohup node app.js &
