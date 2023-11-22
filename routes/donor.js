@@ -7,13 +7,15 @@ const mongoose = require('mongoose');
 
 router.get("/donor/dashboard", middleware.ensureDonorLoggedIn, async (req,res) => {
 	const donorId = req.user._id;
-	const numPendingDonations = await Donation.countDocuments({ donor: donorId, status: "pending" });
+	// const numPendingDonations = await Donation.countDocuments({ donor: donorId, status: "pending" });
 	const numAcceptedDonations = await Donation.countDocuments({ donor: donorId, status: "accepted" });
 	const numAssignedDonations = await Donation.countDocuments({ donor: donorId, status: "assigned" });
 	const numCollectedDonations = await Donation.countDocuments({ donor: donorId, status: "collected" });
+	const donor = await User.findOne({ _id: donorId });
+	const totalWeight = donor ? donor.weight : 0;
 	res.render("donor/dashboard", {
 		title: "Dashboard",
-		numPendingDonations, numAcceptedDonations, numAssignedDonations, numCollectedDonations
+		numAcceptedDonations, numAssignedDonations, numCollectedDonations, totalWeight
 	});
 });
 
