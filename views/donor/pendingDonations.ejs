@@ -9,7 +9,7 @@
 		</div>
 		
 		<div class="m-4">
-			<% for(let i=0; i<pendingDonations.length; i++) { %>
+			<% for(let i=(pendingDonations.length-1); i>-1; i--) { %>
 				<div class="bg-white mb-4 p-4 shadow-sm">
 					<div class="mb-2">
 						<span>Food type:</span>
@@ -38,8 +38,13 @@
 					
 					<div class="mb-2">
 						<span>Expiry Date:</span>
-						<span><%= pendingDonations[i].expiryDate.toLocaleString("en-IN", { dateStyle: "medium"}) %></span>
+						<% if (pendingDonations[i].expiryDate) { %>
+							<span><%= new Date(pendingDonations[i].expiryDate).toLocaleString("en-IN", { dateStyle: "medium"}) %></span>
+						<% } else { %>
+							<span>No expiry date available</span>
+						<% } %>
 					</div>
+					
 					
 					<div class="mb-2">
 						<span>Status:</span>
