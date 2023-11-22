@@ -7,13 +7,13 @@
 			<h5 class="m-0 color-theme d-inline-block">Donate</h5>
 		</div>
 		
-		<form action="/donor/donate" method="POST" class="border m-4 my-3 p-4 bg-white rounded-2 shadow">
+		<form action="/donor/donate" method="POST" class="border m-4 my-3 p-4 bg-white rounded-2 shadow" enctype="multipart/form-data">
 			<div class="mb-4">
 				<label for="food" class="form-label">Food type</label>
 				<select name="donation[foodType]" class="form-select" required>
 					<option value="vegetarian">Vegetarian</option>
 					<option value="non-vegetarian">Non-Vegetarian</option>
-					<option value="non-vegetarian">Other</option>
+					<option value="other">Other</option>
 				</select>
 			</div>
 			
@@ -24,38 +24,48 @@
 				</div>
 				
 				<div class="mb-4 col-sm-6">
-					<label for="time" class="form-label">Expiry Date</label>
+					<label for="expirytime" class="form-label">Expiry Date</label>
 					<input type="date" name="donation[expiryDate]" class="form-date-input" id="expirytime" required>
 				</div>
 			</div>
-				
-				<div class="row">
-					<div class="mb-4 col-sm-8">
-						<label for="city" class="form-label">City</label>
-						<select class="form-select" name="donation[city]" id="city" required>
-							<option value="abudhabi">Abu Dhabi</option>
-							<option value="dubai">Dubai</option>
-							<option value="sharjah">Sharjah</option>
-							<option value="alain">Al Ain</option>
-							<option value="ajman">Ajman</option>
-							<option value="rasalkhaimah">Ras Al Khaimah</option>
-							<option value="fujairah">Fujairah</option>
-							<option value="umm-al-quwain">Umm Al Quwain</option>
-							<!-- Add more cities here if needed -->
-						  </select>
-					</div>
+			
+			<div class="row">
+				<div class="mb-4 col-sm-8">
+					<label for="city" class="form-label">City</label>
+					<select class="form-select" name="donation[city]" id="city" required>
+						<option value="abudhabi">Abu Dhabi</option>
+						<option value="dubai">Dubai</option>
+						<option value="sharjah">Sharjah</option>
+						<option value="alain">Al Ain</option>
+						<option value="ajman">Ajman</option>
+						<option value="rasalkhaimah">Ras Al Khaimah</option>
+						<option value="fujairah">Fujairah</option>
+						<option value="umm-al-quwain">Umm Al Quwain</option>
+						<!-- Add more cities here if needed -->
+					</select>
+				</div>
 
-					<div class="row">
-						<div class="mb-4 col-sm-8">
-							<label for="address" class="form-label">Address to collect</label>
-							<input type="text" name="donation[address]" class="form-control" id="address" placeholder="Enter address.." value="<%= currentUser.address %>" required>
-						</div>
-				
 				<div class="mb-4 col-sm-4">
 					<label for="phone" class="form-label">Phone</label>
 					<input type="number" name="donation[phone]" class="form-control" id="phone" placeholder="Enter phone.." value="<%= currentUser.phone %>" required>
 				</div>
 			</div>
+
+			<div class="row">
+				<div class="mb-4 col-sm-4">
+					<label for="pickup-time" class="form-label">Preferred Pickup Time</label>
+					<input type="time" name="donation[pickupTime]" class="form-control" id="pickup-time" required>
+				</div>
+
+				<div class="mb-4 col-sm-4">
+					<label for="address" class="form-label">Address to collect</label>
+					<input type="text" name="donation[address]" class="form-control" id="address" placeholder="Enter address.." value="<%= currentUser.address %>" required>
+				</div>
+
+				
+			</div>
+
+			
 
 			<div class="mb-4">
 				<label for="image" class="form-label">Upload Image</label>
@@ -76,6 +86,5 @@
 <script>
 	const d = new Date();
 	const dateString = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2) + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
-	document.getElementById("time").value = dateString;
+	document.getElementById("expirytime").value = dateString;
 </script>
-
