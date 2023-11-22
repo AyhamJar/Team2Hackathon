@@ -50,7 +50,6 @@
 			  <option value="rasalkhaimah">Ras Al Khaimah</option>
 			  <option value="fujairah">Fujairah</option>
 			  <option value="umm-al-quwain">Umm Al Quwain</option>
-			  <!-- Add more cities here if needed -->
 			</select>
 		  </div>
 		 
@@ -60,12 +59,11 @@
 			<select class="form-select" name="role" id="role">
 				<option value="donor">Donor</option>
 				<option value="agent">Agent</option>
-				<!-- <option value="admin">Admin</option> -->
 			</select>
 		</div>
 
-		<div class="mb-3">
-			<label for="agentType" class="form-label">Signup as</label>
+		<div class="mb-3" id="agentTypeSection" style="display: none;">
+			<label for="agentType" class="form-label">I want</label>
 			<select class="form-select" name="agentType" id="agentType">
 				<option value="compost">Compost</option>
 				<option value="food">Food</option>
@@ -84,3 +82,26 @@
 		
 	</form>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Get the role dropdown element
+        var roleDropdown = document.getElementById("role");
+
+        // Get the agentTypeSection container
+        var agentTypeSection = document.getElementById("agentTypeSection");
+
+        // Add an event listener to the role dropdown
+        roleDropdown.addEventListener("change", function () {
+            // Get the selected value
+            var selectedRole = roleDropdown.value;
+
+            // Check the selected role and show/hide the agentTypeSection accordingly
+            if (selectedRole === "donor") {
+                agentTypeSection.style.display = "none"; // hide the section
+            } else {
+                agentTypeSection.style.display = "block"; // show the section
+            }
+        });
+    });
+</script>
