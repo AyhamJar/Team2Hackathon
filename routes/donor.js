@@ -3,6 +3,10 @@ const router = express.Router();
 const middleware = require("../middleware/index.js");
 const User = require("../models/user.js");
 const Donation = require("../models/donation.js");
+const multer = require("multer");
+
+const storage = multer.memoryStorage(); // Store the file in memory as a Buffer
+const upload = multer({ storage: storage });
 
 
 router.get("/donor/dashboard", middleware.ensureDonorLoggedIn, async (req,res) => {
@@ -21,12 +25,17 @@ router.get("/donor/donate", middleware.ensureDonorLoggedIn, (req,res) => {
 	res.render("donor/donate", { title: "Donate" });
 });
 
-router.post("/donor/donate", middleware.ensureDonorLoggedIn, async (req,res) => {
+router.post("/donor/donate", middleware.ensureDonorLoggedIn, upload.single("donationImage"), async (req,res) => {
 	try
 	{
 		const donation = req.body.donation;
 		donation.status = "accepted";
 		donation.donor = req.user._id;
+		// Check if a file is uploaded
+		if (req.file) {
+		donation.image = req.file.buffer; // Save the image as a Buffer
+		}
+		
 		const newDonation = new Donation(donation);
 		await newDonation.save();
 		req.flash("success", "Donation request sent successfully");
@@ -45,6 +54,8 @@ router.get("/donor/donations/pending", middleware.ensureDonorLoggedIn, async (re
 	{
 		const pendingDonations = await Donation.find({ donor: req.user._id, status: ["pending", "rejected", "accepted", "assigned"] }).populate("agent");
 		res.render("donor/pendingDonations", { title: "Pending Donations", pendingDonations });
+		// console.log(pendingDonations)
+		
 	}
 	catch(err)
 	{
