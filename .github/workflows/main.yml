@@ -1,0 +1,27 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - ayham  # adjust the branch name as needed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # use the appropriate operating system
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to EC2-1
+        run: |
+          ssh -i ${{ secrets.SSH_PRIVATE_KEY_1 }} -o StrictHostKeyChecking=no ubuntu@54.224.229.12 "cd /Team2Hackathon && git pull origin main && npm install && nohup node app.js > /dev/null 2>&1 &"
+#          
+ #     - name: Deploy to EC2-2
+ #       run: |
+  #        ssh -i ${{ secrets.SSH_PRIVATE_KEY_2 }} -o StrictHostKeyChecking=no ubuntu@your-ec2-instance-ip-2 "cd /Team2Hackathon && git pull origin main && npm install && nohup node app.js > /dev/null 2>&1 &"
+
+   #   - name: Deploy to EC2-3
+    #    run: |
+     #     ssh -i ${{ secrets.SSH_PRIVATE_KEY_3 }} -o StrictHostKeyChecking=no ubuntu@your-ec2-instance-ip-3 "cd /Team2Hackathon && git pull origin main && npm install && nohup node app.js > /dev/null 2>&1 &"
+          
+      # Add any additional steps as needed, such as running tests or notifications
