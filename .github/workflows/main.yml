@@ -15,7 +15,12 @@ jobs:
       - name: Create SSH directory
         run: mkdir -p $HOME/.ssh
 
+      - name: Echo SSH key to PEM file
+        run: echo "${{ secrets.SSH_PRIVATE_KEY_1 }}" > $HOME/.ssh/deploy_key.pem
+
+      - name: Set permissions for SSH directory and key
+        run: chmod 700 $HOME/.ssh && chmod 600 $HOME/.ssh/deploy_key.pem
+
       - name: Deploy to EC2-1
         run: |
-          ssh-keygen -R ec2-54-224-229-12.compute-1.amazonaws.com
-          ssh -i "${{ secrets.SSH_PRIVATE_KEY_1 }}" -o StrictHostKeyChecking=no ubuntu@ec2-54-224-229-12.compute-1.amazonaws.com 'cd Team2Hackathon && git pull origin main && npm install && nohup node app.js &'
+          ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/deploy_key.pem ubuntu@ec2-54-224-229-12.compute-1.amazonaws.com 'cd Team2Hackathon && git pull origin main && npm install && nohup node app.js &'
