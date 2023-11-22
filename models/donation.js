@@ -26,6 +26,10 @@ const donationSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	weight: {
+		type: Number,
+		required: true
+	},
 	city: {
 		type: String,
 		required: true

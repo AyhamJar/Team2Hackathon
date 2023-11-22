@@ -57,12 +57,17 @@
         <div class="carousel-inner">
             <!-- Slide 1 -->
             <div class="carousel-item active">
-                <img src="/assets/images/img6.png" alt="Slide 1">
-                <div class="carousel-caption">
-                    <h2>Let's fight food waste together</h2>
-                    <p>Join us in rescuing unsold and near-expiry food and making a difference.</p>
-                </div>
-            </div>
+				<img src="/assets/images/img6.png" alt="Slide 1">
+				<div class="carousel-caption">
+				  <% if (typeof totalWeight !== 'undefined') { %>
+					<h2 id="totalWeightCaption"><%= `0 Kg food saved from waste!` %></h2>
+				  <% } else { %>
+					<h2 id="totalWeightCaption">Loading...</h2>
+				  <% } %>
+				  <p>Join us in rescuing unsold and near-expiry food and making a difference.</p>
+				</div>
+			  </div>
+			  
 
             
 	 <!-- Slide 2: Environmental Impact -->
@@ -123,4 +128,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
+
+<script>
+	console.log("Code is run");
+	function animateTotalWeight(targetWeight) {
+	  let currentWeight = 0;
+	  const interval = setInterval(() => {
+		document.getElementById('totalWeightCaption').textContent = `${currentWeight} Kg food saved from waste!`;
+		currentWeight++;
+		if (currentWeight > targetWeight) {
+		  clearInterval(interval);
+		}
+	  }, 100);
+	}
+  
+	// Use EJS to output the value of totalWeight directly in the JavaScript code
+	const totalWeight = <%= totalWeight %>;
+	animateTotalWeight(totalWeight);
+</script>
+
 </html>
