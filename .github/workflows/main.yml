@@ -14,8 +14,5 @@ jobs:
 
       - name: Deploy to EC2-1
         run: |
-          ssh -i "${{ secrets.SSH_PRIVATE_KEY_1 }}" ubuntu@ec2-54-224-229-12.compute-1.amazonaws.com
-          cd Team2Hackathon
-          git pull origin main
-          npm install
-          nohup node app.js &
+          ssh-keygen -R ec2-54-224-229-12.compute-1.amazonaws.com
+          ssh -i "${{ secrets.SSH_PRIVATE_KEY_1 }}" -o StrictHostKeyChecking=no ubuntu@ec2-54-224-229-12.compute-1.amazonaws.com 'cd Team2Hackathon && git pull origin main && npm install && nohup node app.js &'
