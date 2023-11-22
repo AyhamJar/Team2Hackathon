@@ -12,6 +12,7 @@
                             <th scope="col">#</th>
                             <th scope="col">Donor name</th>
                             <th scope="col">Address to collect</th>
+                            <th scope="col">Item to collect</th>
                             <th scope="col">Phone</th>
                             <th scope="col">Actions</th>
                         </tr>
@@ -22,6 +23,7 @@
                                 <th scope="row"> <%= i+1 %> </th>
                                 <td> <%= pendingCollections[i].donor.firstName + " " + pendingCollections[i].donor.lastName %> </td>
                                 <td> <%= pendingCollections[i].address %> </td>
+                                <td> <%= pendingCollections[i].foodType %> </td>
                                 <td> <%= pendingCollections[i].phone %> </td>
                                 <td>
                                     <a href="/agent/collection/view/<%= pendingCollections[i]._id %>" class="btn">View</a>

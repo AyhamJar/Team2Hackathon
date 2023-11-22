@@ -1,15 +1,18 @@
 <main>
 	<%- include('../partials/donorSidebar') %>
-    
+	
 	<div id="main-wrapper">
-<div class="container">
-    <div class="row my-4">
-        <div class="col-lg-12">
-            <div class="table-responsive">
-                <table class="table table-striped text-center">
-                    <thead>
-                        <tr class="table-dark">
-                            <th scope="col">#</th>
+		
+		<div class="bg-white shadow-sm p-3">
+			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
+			<h5 class="m-0 color-theme d-inline-block">Previous Donations</h5>
+		</div>
+		
+		<div class="col col-sm-10 col-12 m-auto my-4" style="max-height: 75%; overflow: auto;">
+			<table class="table table-info table-striped table-hover m-0 bg-white">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
 						<th scope="col">Food type</th>
 						<th scope="col">Quantity</th>
 						<th scope="col">Status</th>
@@ -29,10 +32,8 @@
 						</tr>
 					<% } %>
 				</tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-<%- include('../partials/footer') %>
+			</table>
+		</div>
+		
+	</div>
+</main>

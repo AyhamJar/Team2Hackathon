@@ -1,0 +1,34 @@
+
+<h1 class="m-4">Frequently Asked Questions</h1>
+
+<div class="bg-white m-4 p-4 shadow">
+    <div class="faq-item">
+        <h4 onclick="toggleAnswer('answer1')">What is the mission of our company?</h4>
+        <p id="answer1" class="faq-answer" style="display:none;">
+            Our company aims to...
+        </p>
+    </div>
+</div>
+<div class="bg-white m-4 p-4 shadow">
+    <div class="faq-item">
+        <h4 onclick="toggleAnswer('answer2')">How can you participate in our programs?</h4>
+        <p id="answer2" class="faq-answer" style="display:none;">
+            You can participate by...
+        </p>
+    </div>
+</div>
+    <!-- Add more FAQ items here -->
+
+  
+
+    <script>
+        function toggleAnswer(answerId) {
+            var answer = document.getElementById(answerId);
+            if (answer.style.display === 'none') {
+                answer.style.display = 'block';
+            } else {
+                answer.style.display = 'none';
+            }
+        }
+    </script>
+
