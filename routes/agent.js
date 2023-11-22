@@ -145,7 +145,13 @@ router.get("/agent/collection/collect/:collectionId", middleware.ensureAgentLogg
 	{
 		const collectionId = req.params.collectionId;
 		await Donation.findByIdAndUpdate(collectionId, { status: "collected", collectionTime: Date.now() });
-		// TODO: Update weight for the donor
+		
+		const donation = await Donation.findById(collectionId);
+		const donorId = donation.donor; // Assuming 'donor' is the field storing donor information
+		const donor = await User.findById(donorId);
+		donor.weight += donation.weight;
+		await donor.save();
+
 		req.flash("success", "Donation collected successfully");
 		res.redirect(`/agent/collection/view/${collectionId}`);
 	}

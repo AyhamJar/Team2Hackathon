@@ -30,6 +30,11 @@ const userSchema = new mongoose.Schema({
 		enum: ["compost", "food"],
 		required: true
 	},
+	weight: {
+		type: Number,
+		default: 0,
+		required: true
+	},
 	address: String,
 	phone: Number,
 	joinedTime: {
