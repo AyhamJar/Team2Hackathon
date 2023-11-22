@@ -36,7 +36,7 @@ router.get("/agent/donation/view/:donationId", middleware.ensureAgentLoggedIn, a
 	try
 	{
 		const donationId = req.params.donationId;
-		const donation = await Donation.findById(donationId);
+		const donation = await Donation.findById(donationId).populate("donor").populate("agent");
 		res.render("agent/donation", { title: "Donation details", donation });
 	}
 	catch(err)
