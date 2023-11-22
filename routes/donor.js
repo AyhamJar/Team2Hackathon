@@ -12,7 +12,7 @@ router.get("/donor/dashboard", middleware.ensureDonorLoggedIn, async (req,res) =
 	const numAssignedDonations = await Donation.countDocuments({ donor: donorId, status: "assigned" });
 	const numCollectedDonations = await Donation.countDocuments({ donor: donorId, status: "collected" });
 	const donor = await User.findOne({ _id: donorId });
-	const totalWeight = donor ? donor.weight : 0;
+	const totalWeight = donor && donor.weight !== undefined ? donor.weight : 0;
 	res.render("donor/dashboard", {
 		title: "Dashboard",
 		numAcceptedDonations, numAssignedDonations, numCollectedDonations, totalWeight
