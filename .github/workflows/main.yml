@@ -12,6 +12,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Create SSH directory
+        run: mkdir -p $HOME/.ssh
+
       - name: Deploy to EC2-1
         run: |
           ssh-keygen -R ec2-54-224-229-12.compute-1.amazonaws.com
