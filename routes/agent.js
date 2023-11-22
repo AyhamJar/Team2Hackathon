@@ -14,6 +14,76 @@ router.get("/agent/dashboard", middleware.ensureAgentLoggedIn, async (req,res) =
 	});
 });
 
+router.get('/test', (req, res) => {
+    res.send('Test route is working!');
+});
+
+// Add this route in your Express.js application
+router.get("/agent/donation", async (req, res) => {
+    try {
+        // Fetch the list of available donations (adjust this based on your data retrieval logic)
+        const donations = await Donation.find({status: "accepted" }).populate("donor");
+
+        // Render the food listings page with the donation data
+        res.render("agent/listing", { title: "Available Donations", donations });
+    } catch (err) {
+        console.log(err);
+        req.flash("error", "Some error occurred on the server.");
+        res.redirect("back");
+    }
+});
+router.get("/agent/donation/view/:donationId", middleware.ensureAgentLoggedIn, async (req,res) => {
+	try
+	{
+		const donationId = req.params.donationId;
+		const donation = await Donation.findById(donationId);
+		res.render("agent/donation", { title: "Donation details", donation });
+	}
+	catch(err)
+	{
+		console.log(err);
+		req.flash("error", "Some error occurred on the server.")
+		res.redirect("back");
+	}
+});
+
+router.get("/agent/donation/assign/:donationId", middleware.ensureAgentLoggedIn, async (req,res) => {
+	try
+	{
+		const donationId = req.params.donationId;
+		const agentId = req.user._id;
+		await Donation.findByIdAndUpdate(donationId).then({ status: "assigned", agent: agentId });
+		req.flash("success", "Donation collected successfully");
+		res.redirect(`/agent/donation/view/${donationId}`);
+	}
+	catch(err)
+	{
+		console.log(err);
+		req.flash("error", "Some error occurred on the server.")
+		res.redirect("back");
+	}
+});
+
+// Instead of handling form submission, assign the donation to the current agent directly
+// router.post("/agent/donation/assign/:donationId", middleware.ensureAgentLoggedIn, async (req, res) => {
+//     try {
+//         const donationId = req.params.donationId;
+//         const agentId = req.user._id;
+
+//         // Update the donation with the current agent
+//         await Donation.findByIdAndUpdate(donationId, { status: "assigned" , agent: agentId});
+
+//         // Optionally, you can include a message to the agent if needed
+
+//         req.flash("success", "Donation assigned successfully");
+//         // res.redirect(`/agent/donation/view/${donationId}`);
+//     } catch (err) {
+//         console.log(err);
+//         req.flash("error", "Some error occurred on the server.");
+//         res.redirect("back");
+//     }
+// });
+
 router.get("/agent/collections/pending", middleware.ensureAgentLoggedIn, async (req,res) => {
 	try
 	{
