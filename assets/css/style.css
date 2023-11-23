@@ -38,11 +38,15 @@ header .nav-link:hover
 header .user-icon
 {
 	padding: 0.4rem;
-    color: white !important;
+    color: rgb(3, 1, 1) !important;
     border-radius: 50%;
-    border: 2px solid white;
+    border: 2px solid rgb(7, 94, 39);
     width: 40px;
     text-align: center;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 header .navbar-toggler:focus
 {
@@ -148,9 +152,21 @@ header .navbar-toggler:focus
 	color: white;
 	background-color: #1fa64e;
 }
+.font-size-control {
+    text-align: center;
+    margin-top: 20px;
+}
 
+#increase-font {
+    cursor: pointer;
+    padding: 5px;
+    border: 1px solid #000; /* Example styling, adjust as needed */
+    border-radius: 4px;
+    background-color: #f8f9fa;
+}
 
 @keyframes moveLeft {
 	from { right: -100px; }
 	to { right: 0px; }
 }
+

@@ -26,6 +26,10 @@ const donationSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	weight: {
+		type: Number,
+		required: true
+	},
 	city: {
 		type: String,
 		required: true
@@ -33,6 +37,14 @@ const donationSchema = new mongoose.Schema({
 	phone: {
 		type: Number,
 		required: true
+	},
+	donationType: {
+		type: String,
+		enum: ["compost", "food"],
+		required: true
+	},
+	image: {
+		type: Buffer,
 	},
 	donorToAdminMsg: String,
 	adminToAgentMsg: String,

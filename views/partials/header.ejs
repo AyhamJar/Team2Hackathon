@@ -1,10 +1,25 @@
 <header>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<link href="https://cdn.datatables.net/v/bs4/dt-1.13.8/datatables.min.css" rel="stylesheet">
+	
+
+
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+	
+	
 	<nav class="navbar navbar-expand-sm navbar-light p-0 h-100">
 		<div class="container-fluid">
 			<a class="navbar-brand ps-2" >
 				
 			
-					<img src="/assets/images/logo.png"  style="height:6vh;"  alt="...">
+				<a href="/">
+					<img src="/assets/images/logo3.png" style="height:10vh;" alt="...">
+				  </a>
+				  
 				
 			</a>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -13,16 +28,91 @@
 			</button>
 			<div class="collapse navbar-collapse ps-2" id="navbarSupportedContent" style="z-index: 100;">
 				<ul class="navbar-nav ms-auto me-3">
-					<li class="nav-item"><a class="nav-link" style="width:10vw; font-size:larger" href="/home/about-us">About us</a></li>
-					<li class="nav-item"><a class="nav-link" style="width:10vw; font-size:larger" href="/home/mission">Our mission</a></li>
-					<li class="nav-item"><a class="nav-link" style="width:10vw; font-size:larger"href="/home/contact-us">Contact us</a></li>
-					<% if(currentUser) { %>
-						<li class="user-icon"><%= currentUser.firstName[0] %></li>
+					<li class="nav-item"><a class="nav-link" style="width:10vw; font-size:larger" href="/home/about-us">Who Are We?</a></li>
+					<li class="nav-item"><a class="nav-link" style="width:10vw; font-size:larger" href="/home/mission">Why Donate?</a></li>
+					<li class="nav-item"><a class="nav-link" style="width:10vw; font-size:larger"href="/home/contact-us">Contact Us</a></li>
+					<li class="nav-item"><a class="nav-link" style="width:10vw; font-size:larger"href="/home/faq">FAQ</a></li>
+										<% if(currentUser) { %>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle user-icon" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  <%= currentUser.firstName[0] %>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+							  <% if(currentUser.role === 'agent') { %>
+								<a class="dropdown-item" href="/agent/dashboard">Dashboard</a>
+								<div class="dropdown-divider"></div>
+							  	<a class="dropdown-item" href="/agent/profile">Profile</a>
+							  <% } else if(currentUser.role === 'donor') { %>
+								<a class="dropdown-item" href="/donor/dashboard">Dashboard</a>
+								<div class="dropdown-divider"></div>
+							  	<a class="dropdown-item" href="/donor/profile">Profile</a>
+							  <% } %>
+
+							  <!-- Add other sidebar options here -->
+							  
+							  <div class="dropdown-divider"></div>
+							  <a class="dropdown-item" href="/auth/logout">Logout</a>
+							</div>
+						</li>
 					<% } else { %>
 						<li class="nav-item"><a class="nav-link" style="width:8vw; font-size:larger" href="/auth/login">Login</a></li>
 						<li class="nav-item"><a class="nav-link" style="width:8vw; font-size:larger" href="/auth/signup">Sign up</a></li>
 					<% } %>
 				</ul>
+				<div style="text-align: center; margin-top: 20px;">
+					<a href="javascript:void(0);" id="increase-font" title="Increase Font Size">A+</a>
+					<a href="javascript:void(0);" id="decrease-font" title="Decrease Font Size">A-</a>
+					<button id="read-aloud-btn">Read Aloud</button>
+				</div>
+				
+			
+			
+				<script>
+					document.getElementById('increase-font').addEventListener('click', function() {
+						adjustFontSize(1);
+					});
+				
+					document.getElementById('decrease-font').addEventListener('click', function() {
+						adjustFontSize(-1);
+					});
+				
+					function adjustFontSize(change) {
+						document.querySelectorAll('body, body *').forEach(function(element) {
+							const currentFontSize = window.getComputedStyle(element, null).getPropertyValue('font-size');
+							element.style.fontSize = (parseFloat(currentFontSize) + change) + 'px';
+						});
+					}
+				</script>
+				<script>
+					// Get the button element
+					const readAloudBtn = document.getElementById('read-aloud-btn');
+				  
+					// Function to perform text-to-speech
+					function speak(text) {
+					  const speechSynthesisUtterance = new SpeechSynthesisUtterance(text);
+					  speechSynthesisUtterance.rate = 1; // Speed of speech
+					  speechSynthesisUtterance.pitch = 1; // Pitch of speech
+					  speechSynthesisUtterance.volume = 1; // Volume
+				  
+					  window.speechSynthesis.speak(speechSynthesisUtterance);
+					}
+				  
+					// Event listener for the button click
+					readAloudBtn.addEventListener('click', function() {
+					  // The text you want to read aloud
+					  const textToRead = document.body.innerText; // Or target a specific element
+				  
+					  // Stop any ongoing speech
+					  if (window.speechSynthesis.speaking) {
+						window.speechSynthesis.cancel();
+					  }
+				  
+					  // Start speaking
+					  speak(textToRead);
+					});
+				  </script>
+				  
+			
 			</div>
 		</div>
 	</nav>

@@ -1,0 +1,84 @@
+
+<h1 class="m-4">Frequently Asked Questions</h1>
+
+ <div class="bg-white m-4 p-4 shadow">
+    <div class="faq-item">
+        <h4 onclick="toggleAnswer('answer1')">How does the app work?</h4>
+        <p id="answer1" class="faq-answer" style="display:none;">
+            Our app connects individuals and businesses willing to donate food items that are nearing expiration with those in need. Users can create donation listings, and recipients can find and request available items.
+
+        </p>
+    </div>
+</div>
+<div class="bg-white m-4 p-4 shadow">
+    <div class="faq-item">
+        <h4 onclick="toggleAnswer('answer2')">Is it safe to donate food close to its expiry date?</h4>
+        <p id="answer2" class="faq-answer" style="display:none;">
+            Yes, our app focuses on items that are still safe for consumption before their expiry date. We encourage users to provide accurate information about the condition of the items they donate.
+
+        </p>
+    </div>
+</div>
+<div class="bg-white m-4 p-4 shadow">
+    <div class="faq-item">
+        <h4 onclick="toggleAnswer('answer3')">What types of food items can be donated?</h4>
+        <p id="answer2" class="faq-answer" style="display:none;">
+            Users can donate a variety of perishable and non-perishable food items, including canned goods, fresh produce, dairy products, and more. The key is that the items should be safe for consumption.
+
+        </p>
+    </div>
+</div>
+<div class="bg-white m-4 p-4 shadow">
+    <div class="faq-item">
+        <h4 onclick="toggleAnswer('answer4')">What happens if my donation request is not accepted?*</h4>
+        <p id="answer2" class="faq-answer" style="display:none;">
+            If a donation request is not accepted, users can explore other available listings or create new requests. Our goal is to match donors and recipients efficiently while considering the specific needs of each party.
+        </p>
+    </div>
+</div>
+<div class="bg-white m-4 p-4 shadow">
+    <div class="faq-item">
+        <h4 onclick="toggleAnswer('answer5')">Can businesses participate in food donations?</h4>
+        <p id="answer2" class="faq-answer" style="display:none;">
+            Absolutely! We encourage businesses, including restaurants and grocery stores, to participate. Donating food not only helps the community but can also have potential tax benefits for businesses in some regions.
+        </p>
+    </div>
+</div>
+<div class="bg-white m-4 p-4 shadow">
+    <div class="faq-item">
+        <h4 onclick="toggleAnswer('answer6')">How do you ensure the quality of donated items?</h4>
+        <p id="answer2" class="faq-answer" style="display:none;">
+            While we provide guidelines for donors to ensure the quality of donated items, recipients can review and rate donations. This feedback system helps maintain a level of trust within the community.
+        </p>
+    </div>
+</div>
+<div class="bg-white m-4 p-4 shadow">
+    <div class="faq-item">
+        <h4 onclick="toggleAnswer('answer7')">How do you handle food allergies and dietary restrictions?</h4>
+        <p id="answer2" class="faq-answer" style="display:none;">
+            Donors are responsible for accurately listing ingredients and potential allergens in their items. We encourage users to communicate any specific dietary needs or restrictions during the donation process.
+        </p>
+    </div>
+</div>
+<div class="bg-white m-4 p-4 shadow">
+    <div class="faq-item">
+        <h4 onclick="toggleAnswer('answer8')">Is there a cost to use the app?</h4>
+        <p id="answer2" class="faq-answer" style="display:none;">
+            No, our app is free to use for both donors and recipients. We believe in creating a platform that facilitates food donations without financial barriers.  </p>
+    </div>
+</div>
+    <!-- Add more FAQ items here -->
+
+  
+
+    <script>
+        function toggleAnswer(answerId) {
+            var answer = document.getElementById(answerId);
+            if (answer.style.display === 'none') {
+                answer.style.display = 'block';
+            } else {
+                answer.style.display = 'none';
+            }
+        }
+    </script>
+

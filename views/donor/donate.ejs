@@ -1,71 +1,111 @@
 <main>
-	<%- include('../partials/donorSidebar') %>
-	
-	<div id="main-wrapper">
-		<div class="bg-white shadow-sm p-3">
-			<span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
-			<h5 class="m-0 color-theme d-inline-block">Donate</h5>
-		</div>
-		
-		<form action="/donor/donate" method="POST" class="border m-4 my-3 p-4 bg-white rounded-2 shadow">
+    <%- include('../partials/donorSidebar') %>
+    
+    <div id="main-wrapper">
+        <div class="bg-white shadow-sm p-3">
+            <span class="me-3" id="sidebar-toggler-btn"><i class="fas fa-bars"></i></span>
+            <h5 class="m-0 color-theme d-inline-block">Donate</h5>
+        </div>
+        
+        <form action="/donor/donate" method="POST" class="border m-4 my-3 p-4 bg-white rounded-2 shadow" enctype="multipart/form-data">
 			<div class="mb-4">
-				<label for="food" class="form-label">Food type</label>
-				<input type="text" name="donation[foodType]" class="form-control" id="food" placeholder="Enter food.." required autofocus>
-			</div>
-			
-			<div class="row">
-				<div class="mb-4 col-sm-6">
-					<label for="quantity" class="form-label">Quantity</label>
-					<input type="text" name="donation[quantity]" class="form-control" id="quantity" placeholder="Enter quantity of food.." required>
-				</div>
-				
-				<div class="mb-4 col-sm-6">
+                <label for="food" class="form-label">Food type</label>
+                <input type="text" name="donation[foodType]" class="form-control" id="food" placeholder="Enter food.." value="<%= donation ? donation.foodType : '' %>" required autofocus>
+            </div>
+            
+            <div class="row">
+                <div class="mb-4 col-sm-6">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="text" name="donation[quantity]" class="form-control" id="quantity" placeholder="Enter quantity of food.." value="<%= donation ? donation.quantity : '' %>" required>
+                </div>
+                
+                <div class="mb-4 col-sm-6">
 					<label for="time" class="form-label">Expiry Date</label>
-					<input type="date" name="donation[expiryDate]" class="form-date-input" id="expirytime" required>
+					<% const formattedExpiryDate = donation && donation.expiryDate ? donation.expiryDate.toISOString().split('T')[0] : ''; %>
+					<input type="date" name="donation[expiryDate]" class="form-date-input" id="expirytime" value="<%= formattedExpiryDate %>" required>
 				</div>
-			</div>
-				
-				<div class="row">
-					<div class="mb-4 col-sm-8">
-						<label for="city" class="form-label">City</label>
-						<select class="form-select" name="donation[city]" id="city" required>
-							<option value="abudhabi">Abu Dhabi</option>
-							<option value="dubai">Dubai</option>
-							<option value="sharjah">Sharjah</option>
-							<option value="alain">Al Ain</option>
-							<option value="ajman">Ajman</option>
-							<option value="rasalkhaimah">Ras Al Khaimah</option>
-							<option value="fujairah">Fujairah</option>
-							<option value="umm-al-quwain">Umm Al Quwain</option>
-							<!-- Add more cities here if needed -->
-						  </select>
-					</div>
+            </div>
 
-					<div class="row">
-						<div class="mb-4 col-sm-8">
-							<label for="address" class="form-label">Address to collect</label>
-							<input type="text" name="donation[address]" class="form-control" id="address" placeholder="Enter address.." value="<%= currentUser.address %>" required>
-						</div>
-				
-				<div class="mb-4 col-sm-4">
-					<label for="phone" class="form-label">Phone</label>
-					<input type="number" name="donation[phone]" class="form-control" id="phone" placeholder="Enter phone.." value="<%= currentUser.phone %>" required>
+            <div class="mb-4 col-sm-8">
+                <label for="donationType" class="form-label">Donation Type</label>
+                <select class="form-select" name="donation[donationType]" id="donationType" required>
+                    <option value="food" <%= donation.donationType === 'food' ? 'selected' : '' %>>Food</option>
+                    <option value="compost" <%= donation.donationType === 'compost' ? 'selected' : '' %>>Compost</option>
+                </select>
+            </div>
+            
+            <div class="row">
+                <div class="mb-4 col-sm-8">
+                    <label for="city" class="form-label">City</label>
+                    <select class="form-select" name="donation[city]" id="city" required>
+                        <option value="abudhabi" <%= donation && donation.city === 'abudhabi' ? 'selected' : '' %>>Abu Dhabi</option>
+                        <option value="dubai" <%= donation && donation.city === 'dubai' ? 'selected' : '' %>>Dubai</option>
+                        <option value="sharjah" <%= donation && donation.city === 'sharjah' ? 'selected' : '' %>>Sharjah</option>
+                        <option value="alain" <%= donation && donation.city === 'alain' ? 'selected' : '' %>>Al Ain</option>
+                        <option value="ajman" <%= donation && donation.city === 'ajman' ? 'selected' : '' %>>Ajman</option>
+                        <option value="rasalkhaimah" <%= donation && donation.city === 'rasalkhaimah' ? 'selected' : '' %>>Ras Al Khaimah</option>
+                        <option value="fujairah" <%= donation && donation.city === 'fujairah' ? 'selected' : '' %>>Fujairah</option>
+                        <option value="umm-al-quwain" <%= donation && donation.city === 'umm-al-quwain' ? 'selected' : '' %>>Umm Al Quwain</option>
+                        <!-- Add more cities here if needed -->
+                    </select>
+                </div>
+				<div class="mb-4 col-sm-2">
+					<label for="weight" class="form-label">Weight (in Kg)</label>
+					<input type="number" name="donation[weight]" class="form-control" id="weight" placeholder="Enter weight.." value="<%= donation && donation.weight ? donation.weight : '' %>" required min="0">
 				</div>
-			</div>
-			
-			<div class="mb-4">
-				<label for="msg" class="form-label">Want to write some message?</label>
-				<textarea type="text" name="donation[donorToAdminMsg]" class="form-control" id="msg" placeholder="You can write here some msg.."></textarea>
-			</div>
-			
-			<button type="submit" class="btn w-75 d-block m-auto mt-4">Submit</button>
-		</form>
-		
-	</div>
-</main>
+
+                <div class="row">
+                    <div class="mb-4 col-sm-8">
+                        <label for="address" class="form-label">Address to collect</label>
+                        <input type="text" name="donation[address]" class="form-control" id="address" placeholder="Enter address.." value="<%= donation && donation.address ? donation.address : '' %>" required>
+                    </div>
+            
+                    <div class="mb-4 col-sm-4">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="number" name="donation[phone]" class="form-control" id="phone" placeholder="Enter phone.." value="<%= donation && donation.phone ? donation.phone : '' %>" required>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="image" class="form-label">Upload Image</label>
+                    <input type="file" name="donationImage" class="form-control" id="image" accept="image/*">
+                </div>
+            
+                <div class="mb-4">
+                    <label for="msg" class="form-label">Want to write some message?</label>
+                    <textarea type="text" name="donation[donorToAdminMsg]" class="form-control" id="msg" placeholder="You can write here some msg.."><%= donation && donation.donorToAdminMsg ? donation.donorToAdminMsg : '' %></textarea>
+                </div>
+            
+				<input type="hidden" name="donation[_id]" value="<%= donation && donation._id %>">
+
+
+
+                <button type="submit" class="btn w-75 d-block m-auto mt-4">Submit</button>
+            </form>
+            
+        </div>
+    </main>
+
+
 
 <script>
 	const d = new Date();
 	const dateString = d.getFullYear() + "-" + ("0"+(d.getMonth()+1)).slice(-2) + "-" + ("0" + d.getDate()).slice(-2) + "T" + ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2);
 	document.getElementById("time").value = dateString;
+</script>
+<script>
+	var date = new Date();
+	var tdate = date.getDate();
+	var month = date.getMonth() + 1;
+	if(tdate < 10){
+		tdate = "0" + tdate;
+
+	}
+	if(month < 10){
+		month = "0" + month;
+	}
+	var year = date.getUTCFullYear();
+	var minDate = year + "-" + month + "-" + tdate;
+	document.getElementById("expirytime").setAttribute("min", minDate);
+
 </script>

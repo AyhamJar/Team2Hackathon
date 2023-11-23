@@ -15,19 +15,20 @@
 				<div class="fs-5">donations by you</div>
 			</div>
 			
-			<div class="bg-primary rounded p-3" style="width: 250px;">
-				<div class="fs-1"><%= numPendingDonations %></div>
-				<div class="fs-5">donation requests not processed yet</div>
-			</div>
 			
-			<div class="bg-success rounded p-3" style="width: 250px;">
+			<div class="bg-primary rounded p-3" style="width: 250px;">
 				<div class="fs-1"><%= numAcceptedDonations %></div>
-				<div class="fs-5">donations accepted and to be assigned to agent</div>
+				<div class="fs-5">donations waiting to be assigned</div>
 			</div>
 			
 			<div class="bg-danger rounded p-3" style="width: 250px;">
 				<div class="fs-1"><%= numAssignedDonations %></div>
-				<div class="fs-5">donations not collected yet</div>
+				<div class="fs-5">donations waiting for collection</div>
+			</div>
+
+			<div class="bg-primary rounded p-3" style="width: 250px;">
+				<div class="fs-1"><%= totalWeight %></div>
+				<div class="fs-5">Kg donated</div>
 			</div>
 			
 		</div>
