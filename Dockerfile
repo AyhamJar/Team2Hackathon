@@ -5,4 +5,4 @@ COPY package.json /code/package.json
 RUN npm install
 COPY . /code
 CMD ["node", "index.js"]
-EXPOSE 5000
+EXPOSE 5001
