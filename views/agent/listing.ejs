@@ -13,11 +13,9 @@
         <% console.log("userAgentType: " + userAgentType); %>
         <!-- Loop through the donations and display information for each -->
         <% donations.forEach((donation) => { %>
-            <% if donation.donationType === userAgentType { %>
+            <% if (donation.donationType === userAgentType) { %>
                 <div class="card mb-3">
-                    <% const imageSrc = `/agent/donation/view/${donation._id}`; %>
-                    <img src="<%= imageSrc %>"  alt="Donation Image" width="100" height="150">
-                    <!-- <img src="<%= donation.image %>" class="card-img-top" alt="Donation Image"> -->
+                    
                     <div class="card-body">
                         <h5 class="card-title"><%= donation.foodType %> - <%= donation.quantity %></h5>
                         <p class="card-text">Expiry Date: <%= donation.expiryDate %></p>
