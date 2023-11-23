@@ -16,11 +16,18 @@ jobs:
         run: mkdir -p $HOME/.ssh
 
       - name: Echo SSH key to PEM file
-        run: echo "${{ secrets.SSH_PRIVATE_KEY_1 }}" > $HOME/.ssh/deploy_key.pem
+        run: echo "${{ secrets.SSH_PRIVATE_KEY_1 }}" > $HOME/.ssh/deploy_key1.pem
+             echo "${{ secrets.SSH_PRIVATE_KEY_2 }}" > $HOME/.ssh/deploy_key2.pem
+             echo "${{ secrets.SSH_PRIVATE_KEY_3 }}" > $HOME/.ssh/deploy_key3.pem
 
       - name: Set permissions for SSH directory and key
-        run: chmod 700 $HOME/.ssh && chmod 600 $HOME/.ssh/deploy_key.pem
+        run: chmod 700 $HOME/.ssh && chmod 600 $HOME/.ssh/deploy_key1.pem
+             chmod 700 $HOME/.ssh && chmod 600 $HOME/.ssh/deploy_key2.pem
+             chmod 700 $HOME/.ssh && chmod 600 $HOME/.ssh/deploy_key3.pem
+
 
       - name: Deploy to EC2-1
         run: |
-          ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/deploy_key.pem ubuntu@ec2-54-224-112-183.compute-1.amazonaws.com 'cd Team2Hackathon && git pull origin main && npm install && sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 5001 && nohup node app.js &'
+          ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/deploy_key1.pem ubuntu@ec2-54-224-112-183.compute-1.amazonaws.com 'cd Team2Hackathon && git pull origin main && npm install && sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 5001 && nohup node app.js &'
+          ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/deploy_key2.pem ubuntu@ec2-34-205-15-67.compute-1.amazonaws.com 'cd Team2Hackathon && git pull origin main && npm install && sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 5001 && nohup node app.js &'
+          ssh -o StrictHostKeyChecking=no -i $HOME/.ssh/deploy_key3.pem ubuntu@ec2-54-234-120-220.compute-1.amazonaws.com 'cd Team2Hackathon && git pull origin main && npm install && sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-ports 5001 && nohup node app.js &'
