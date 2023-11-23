@@ -101,7 +101,7 @@ router.get("/donor/donations/pending", middleware.ensureDonorLoggedIn, async (re
 router.get("/donor/donations/previous", middleware.ensureDonorLoggedIn, async (req,res) => {
 	try
 	{
-		const previousDonations = await Donation.find({ donor: req.user._id, status: "collected" }).populate("agent");
+		const previousDonations = await Donation.find({ donor: req.user._id, status: "collected" }).populate("agent").populate("donor");
 		res.render("donor/previousDonations", { title: "Previous Donations", previousDonations });
 	}
 	catch(err)
