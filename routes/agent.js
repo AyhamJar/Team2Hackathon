@@ -3,6 +3,7 @@ const router = express.Router();
 const middleware = require("../middleware/index.js");
 const User = require("../models/user.js");
 const Donation = require("../models/donation.js");
+const sharp = require('sharp');
 
 router.get("/agent/dashboard", middleware.ensureAgentLoggedIn, async (req,res) => {
 	const agentId = req.user._id;
@@ -32,19 +33,35 @@ router.get("/agent/donation", async (req, res) => {
         res.redirect("back");
     }
 });
-router.get("/agent/donation/view/:donationId", middleware.ensureAgentLoggedIn, async (req,res) => {
-	try
-	{
-		const donationId = req.params.donationId;
-		const donation = await Donation.findById(donationId).populate("donor").populate("agent");
-		res.render("agent/donation", { title: "Donation details", donation });
-	}
-	catch(err)
-	{
-		console.log(err);
-		req.flash("error", "Some error occurred on the server.")
-		res.redirect("back");
-	}
+
+router.get("/agent/donation/view/:donationId", middleware.ensureAgentLoggedIn, async (req, res) => {
+    try {
+        const donationId = req.params.donationId;
+        const donation = await Donation.findById(donationId).populate("donor").populate("agent");
+
+        if (!donation) {
+            req.flash("error", "Donation not found");
+            return res.redirect("back");
+        }
+
+        // Check if the donation has an image
+        if (!donation.image) {
+            req.flash("error", "Donation does not have an image");
+            return res.redirect("back");
+        }
+
+        // Set the appropriate content type for the response header based on the image type
+        res.setHeader("Content-Type", "image/*");
+
+        // Send the image buffer as the response
+        res.send(donation.image);
+		// res.render("agent/donation", { title: "Donation details", donation });
+		
+    } catch (err) {
+        console.log(err);
+        req.flash("error", "Some error occurred on the server.");
+        res.redirect("back");
+    }
 });
 
 const MAX_ASSIGNED_DONATIONS = 2; // Adjust the maximum allowed assigned donations

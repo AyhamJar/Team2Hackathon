@@ -7,7 +7,7 @@
             <h5 class="m-0 color-theme d-inline-block">Donate</h5>
         </div>
         
-        <form action="/donor/donate" method="POST" class="border m-4 my-3 p-4 bg-white rounded-2 shadow">
+        <form action="/donor/donate" method="POST" class="border m-4 my-3 p-4 bg-white rounded-2 shadow" enctype="multipart/form-data">
 			<div class="mb-4">
                 <label for="food" class="form-label">Food type</label>
                 <input type="text" name="donation[foodType]" class="form-control" id="food" placeholder="Enter food.." value="<%= donation ? donation.foodType : '' %>" required autofocus>
@@ -15,8 +15,8 @@
             
             <div class="row">
                 <div class="mb-4 col-sm-6">
-                    <label for="quantity" class="form-label">Quantity (in kg)</label>
-                    <input type="number" name="donation[quantity]" class="form-control" id="quantity" placeholder="Enter quantity of food.." value="<%= donation ? donation.quantity : '' %>" required>
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="text" name="donation[quantity]" class="form-control" id="quantity" placeholder="Enter quantity of food.." value="<%= donation ? donation.quantity : '' %>" required>
                 </div>
                 
                 <div class="mb-4 col-sm-6">
@@ -64,6 +64,11 @@
                         <label for="phone" class="form-label">Phone</label>
                         <input type="number" name="donation[phone]" class="form-control" id="phone" placeholder="Enter phone.." value="<%= donation && donation.phone ? donation.phone : '' %>" required>
                     </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="image" class="form-label">Upload Image</label>
+                    <input type="file" name="donationImage" class="form-control" id="image" accept="image/*">
                 </div>
             
                 <div class="mb-4">

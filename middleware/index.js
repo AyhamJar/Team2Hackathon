@@ -48,7 +48,7 @@ const middleware = {
 	
 	ensureNotLoggedIn: (req, res, next) => {
 		if(req.isAuthenticated()) {
-			// req.flash("warning", "Please logout first to continue");
+			req.flash("warning", "Please logout first to continue");
 			if(req.user.role == "admin")
 				return res.redirect("/admin/dashboard");
 			if(req.user.role == "donor")

@@ -4,6 +4,9 @@ const middleware = require("../middleware/index.js");
 const User = require("../models/user.js");
 const Donation = require("../models/donation.js");
 const mongoose = require('mongoose');
+const multer = require("multer");
+const storage = multer.memoryStorage(); // Store the file in memory as a Buffer
+const upload = multer({ storage: storage });
 
 router.get("/donor/dashboard", middleware.ensureDonorLoggedIn, async (req,res) => {
 	const donorId = req.user._id;
@@ -23,7 +26,7 @@ router.get("/donor/donate", middleware.ensureDonorLoggedIn, (req,res) => {
 	res.render("donor/donate", { title: "Donate", donation: {} });
 });
 
-router.post("/donor/donate", middleware.ensureDonorLoggedIn, async (req,res) => {
+router.post("/donor/donate", middleware.ensureDonorLoggedIn, upload.single("donationImage"), async (req,res) => {
 	try
 	{
 		const donation = req.body.donation;
@@ -32,6 +35,9 @@ router.post("/donor/donate", middleware.ensureDonorLoggedIn, async (req,res) => 
 		const donationId = req.body.donation._id;
 
 		console.log("donationId: " + donationId);
+
+		// Check if a file is uploaded
+
 		if (donationId === "" || !mongoose.isValidObjectId(donationId)) {
 			// Handle invalid ObjectId, perhaps send an error response
 			
@@ -41,6 +47,9 @@ router.post("/donor/donate", middleware.ensureDonorLoggedIn, async (req,res) => 
 
 			donation.status = "accepted";
 			donation.donor = req.user._id;
+			if (req.file) {
+				donation.image = req.file.buffer; // Save the image as a Buffer
+				}
 			const newDonation = new Donation(donation);
 			await newDonation.save();
 			req.flash("success", "Donation request sent successfully");
